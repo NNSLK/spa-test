@@ -28,7 +28,11 @@ export default new Vuex.Store({
           return Promise.reject(error.response);
         },
       );
+      
     },
+
+    /////////////////////////////
+    
   },
   actions: {
     async authUser({
@@ -41,10 +45,13 @@ export default new Vuex.Store({
         data
       } = await client.post(`api-token-auth/`, {
         username,
-        password
-        // returnSecureToken: true
+        password,
+        
+        //returnSecureToken: true
       })
-      commit('setToken', data.token)
+      //commit('setToken', data.token)
+      
+      
     },
   },
   modules: {
