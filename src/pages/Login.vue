@@ -25,7 +25,7 @@
                     prepend-icon="mdi-lock"
                     type="password"
                     v-model="password"
-                    :counter="6"
+                    :counter="15"
                     :rules="passwordRules"
                   ></v-text-field>
                 </v-form>
@@ -42,20 +42,16 @@
   </v-app>
 </template>
 <script>
+import { client } from "@/store";
 export default {
   data() {
     return {
+      client,
       email: "",
       password: "",
       valid: false,
-      emailRules: [
-        v => !!v || "E-mail is required",
-        v => /.+@.+/.test(v) || "E-mail must be valid"
-      ],
-      passwordRules: [
-        v => !!v || "Password is required",
-        v => v.length >= 6 || "Password most be equal or more 6"
-      ]
+      emailRules: [v => !!v || "E-mail is required"],
+      passwordRules: [v => !!v || "Password is required"]
     };
   },
   computed: {
@@ -65,18 +61,16 @@ export default {
   },
   methods: {
     onSubmit() {
-      if (this.$refs.form.validate()) {
-        const user = {
-          email: this.email,
-          password: this.password
-        };
-        this.$store
-          .dispatch("loginUser", user)
-          .then(() => {
-            this.$router.push("/");
-          })
-          .catch(() => {});
-      }
+      const user = {
+        username: this.email,
+        password: this.password
+      };
+      this.$store
+        .dispatch("authUser", user)
+        .then(() => {
+          this.$router.push("/");
+        })
+        .catch(() => {});
     }
   },
   created() {

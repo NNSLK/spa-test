@@ -13,7 +13,8 @@ new Vue({
   router,
   store,
   vuetify,
-  created() {
+  async created() {
+    await this.$store.commit('init');
     fb.initializeApp({
       apiKey: "AIzaSyDO74VNm47fJ2e4O3cuOuIBEOryxyMN890",
       authDomain: "itc-ads-6a05c.firebaseapp.com",
